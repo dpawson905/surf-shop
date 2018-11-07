@@ -27,7 +27,7 @@ router.get('/:id/edit', (req, res, next) => {
 });
 
 /* PUT posts edit /posts/:id */
-router.put('/new', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
   res.send('UPDATE /posts/:id')
 });
 
