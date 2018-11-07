@@ -37,22 +37,22 @@ router.put('/profile/:user_id', (req, res, next) => {
 });
 
 /* GET /forgot-password */
-router.get('forgot-pw', (req, res, next) => {
+router.get('/forgot-pw', (req, res, next) => {
   res.send('GET /forgot-password')
 });
 
 /* PUT /forgot-password */
-router.put('forgot-pw', (req, res, next) => {
+router.put('/forgot-pw', (req, res, next) => {
   res.send('GET /forgot-password')
 });
 
 /* GET /reset-password */
-router.get('reset-pw/:token', (req, res, next) => {
+router.get('/reset-pw/:token', (req, res, next) => {
   res.send('GET /reset-password/:token')
 });
 
 /* PUT /reset-password */
-router.put('reset-pw/:token', (req, res, next) => {
+router.put('/reset-pw/:token', (req, res, next) => {
   res.send('PUT /reset-password/:token')
 });
 
