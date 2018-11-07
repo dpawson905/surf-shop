@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "set DEBUG=code-w-node:* nodemon"
+    "dev": "set DEBUG=code-w-node:* && nodemon"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
