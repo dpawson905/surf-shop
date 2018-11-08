@@ -1,8 +1,9 @@
 const debug = require('debug')('code-w-node:register');
 const User = require('../models/user');
+const passport = require('passport');
 
 module.exports = {
-  // POST register
+  // POST /register
   async postRegister(req, res, next) {
     debug('Registering User');
     const newUser = new User({
@@ -13,6 +14,22 @@ module.exports = {
     await User.register(newUser, req.body.password);
     debug('User Created')
     res.redirect('/');
+  },
+
+  // POST /login
+  postLogin(req, res, next) {
+    passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login'
+      // successFlash: true,
+      // failureFlash: true
+    })(req, res, next);
+  },
+
+  // GET /logout
+  getLogout(req, res, next) {
+    req.logout();
+    res.redirect('/')
   }
 
 }
