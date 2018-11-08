@@ -11,6 +11,7 @@ module.exports = {
       image: req.body.image
     });
     await User.register(newUser, req.body.password);
+    debug('User Created')
     res.redirect('/');
   }
 }
