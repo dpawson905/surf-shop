@@ -14,4 +14,5 @@ module.exports = {
     debug('User Created')
     res.redirect('/');
   }
+
 }
