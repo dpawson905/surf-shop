@@ -40,5 +40,11 @@ module.exports = {
       }
   );
     res.redirect(`/posts/${post.id}`)
+  },
+
+  // Post DESTROY
+  async postDestroy(req, res, next) {
+    await Post.findOneAndDelete(req.params.id);
+    res.redirect('/posts')
   }
 }
