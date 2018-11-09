@@ -53,6 +53,9 @@ module.exports = {
         new: true
       }
   );
+    // handle any deletion of existing images
+    
+    // handle upload of any new images
     res.redirect(`/posts/${post.id}`)
   },
 
