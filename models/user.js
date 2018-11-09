@@ -8,13 +8,7 @@ const UserSchema = new Schema({
     unique: true,
     lowercase: true
   },
-  image: String,
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Post'
-    }
-  ]
+  image: String
 });
 
 UserSchema.plugin(passportLocalMongoose, {
