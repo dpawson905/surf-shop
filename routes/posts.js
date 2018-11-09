@@ -12,7 +12,8 @@ const {
   postNew,
   postCreate,
   postShow,
-  postEdit
+  postEdit,
+  postUpdate
 } = require('../controllers/posts');
 
 /* GET posts index /posts */
@@ -31,9 +32,7 @@ router.get('/:id', asyncErrorHandler(postShow));
 router.get('/:id/edit', asyncErrorHandler(postEdit));
 
 /* PUT posts edit /posts/:id */
-router.put('/:id', (req, res, next) => {
-  res.send('UPDATE /posts/:id')
-});
+router.put('/:id', asyncErrorHandler(postUpdate));
 
 /* DELETE posts edit /posts/:id */
 router.delete('/id', (req, res, next) => {
