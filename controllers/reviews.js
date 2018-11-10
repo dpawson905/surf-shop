@@ -20,7 +20,9 @@ module.exports = {
 
   // Review Update
   async reviewUpdate(req, res, next) {
-    
+    await Review.findOneAndUpdate(req.params.review_id, req.body.review, {new: true});
+    req.session.success = 'Review updated successfully';
+    res.redirect(`/posts/${req.params.id}`);
   },
 
   // Review DESTROY
