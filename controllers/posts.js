@@ -14,12 +14,12 @@ module.exports = {
   // GET all posts /index
   async postIndex(req, res, next) {
     let posts = await Post.find({});
-    res.render('posts/index', { posts })
+    res.render('posts/index', { posts, title: 'Post Index' })
   },
 
   // GET posts /new
   postNew(req, res, next) {
-    res.render('posts/new');
+    res.render('posts/new', { title: 'New Post' });
   },
 
   // Posts Create

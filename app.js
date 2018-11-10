@@ -58,6 +58,12 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Set title middleware
+app.use(function (req, res, next) {
+  res.locals.title = 'Surf Shop'
+  next()
+})
+
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
 app.use('/posts/:id/reviews', reviewsRouter);
