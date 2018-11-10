@@ -54,6 +54,10 @@ module.exports = {
             // Show newest review at the top
             '_id': -1
           }
+        },
+        populate: {
+          path: 'author',
+          model: 'User'
         }
       })
     res.render('posts/show', { post })
