@@ -49,7 +49,7 @@ router.put('/profile/:user_id', (req, res, next) => {
 
 /* GET /forgot-password */
 router.get('/forgot-pw', (req, res, next) => {
-  res.send('GET /forgot-password')
+  res.render('password');
 });
 
 /* PUT /forgot-password */
