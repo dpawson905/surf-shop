@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') -%>
 <h1>Posts Index</h1>
-
+<% include ../partials/paginate %>
 <% posts.docs.forEach((post) => { %>
   <div>
     <h2><%= post.title %></h2>
@@ -10,4 +10,4 @@
     <div><a href="/posts/<%= post.id %>">View More</a></div>
   </div>
 <% }) %>
-  
+<% include ../partials/paginate %>
