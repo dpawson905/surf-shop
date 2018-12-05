@@ -65,8 +65,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function (req, res, next) {
   // manually log in user for dev only
   req.user = {
-    '_id': '5be3830fecccf147ccf72185',
-    'username': 'dpawson905'
+    '_id': '5c083f5108bae544b8e7876f',
+    'username': 'darrell1'
   };
   res.locals.currentUser = req.user;
   // set default page title

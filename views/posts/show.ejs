@@ -4,7 +4,9 @@
 <div><%= post.price %></div>
 <div><%= post.description %></div>
 <div><%= post.location %></div>
-<div>Average: <%= post.avgRating %></div>
+<div>
+  <% include ../partials/avgRating %>
+</div>
 <div>
   <% post.images.forEach((image) => { %>
     <img src="<%= image.url %>" alt="Surf Shop Images" height="200px">
