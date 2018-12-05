@@ -63,8 +63,9 @@ module.exports = {
           path: 'author',
           model: 'User'
         }
-      })
-    res.render('posts/show', { post })
+      });
+    let floorRating = post.calculateAvgRating();
+    res.render('posts/show', { post, floorRating })
   },
 
   // Post Edit
