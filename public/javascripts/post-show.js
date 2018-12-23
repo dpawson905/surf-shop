@@ -1,10 +1,10 @@
-mapboxgl.accessToken = 'pk.eyJ1IjoiZHBhd3NvbjkwNSIsImEiOiJjam1ucXMzdnYwZmFkM3BsdWh3cTducmFnIn0.EOJQd5gfP0xCZOaAD41big';
+mapboxgl.accessToken = mapBoxToken;
 
 var map = new mapboxgl.Map({
   container: 'map',
-  style: 'mapbox://styles/mapbox/streets-v9',
-  center: post.coordinates,
-  zoom: 14
+  style: 'mapbox://styles/mapbox/light-v9',
+  center: post.geometry.coordinates,
+  zoom: 5
 });
 
 // create a HTML element for the post location marker
@@ -13,7 +13,7 @@ el.className = 'marker';
 
 // make a marker for the location and add to the map
 new mapboxgl.Marker(el)
-  .setLngLat(post.coordinates)
+  .setLngLat(post.geometry.coordinates)
   .setPopup(new mapboxgl.Popup({
       offset: 25
     }) // add popups

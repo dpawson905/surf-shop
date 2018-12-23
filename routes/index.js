@@ -10,13 +10,12 @@ const {
 const { 
   postRegister,
   postLogin,
-  getLogout
+  getLogout,
+  landingPage
 } = require('../controllers');
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
-  res.render('index', { title: 'Surf Shop - Home' });
-});
+router.get('/', asyncErrorHandler(landingPage));
 
 /* GET /register */
 router.get('/register', (req, res, next) => {
