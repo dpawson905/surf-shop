@@ -9,20 +9,43 @@ module.exports = {
   // GET / 
   async landingPage(req, res, next) {
     const posts = await Post.find({});
-    res.render('index', { posts, mapBoxToken, title: 'Surf Shop - Home' });
+    res.render('index', {
+      posts,
+      mapBoxToken,
+      title: 'Surf Shop - Home'
+    });
+  },
+
+  // GET /register
+  getRegister(req, res, next) {
+    res.render('register', {
+      title: 'Register'
+    });
   },
 
   // POST /register
   async postRegister(req, res, next) {
-    debug('Registering User');
     const newUser = new User({
-      email: req.body.email,
       username: req.body.username,
+      email: req.body.email,
       image: req.body.image
     });
-    await User.register(newUser, req.body.password);
-    debug('User Created')
-    res.redirect('/');
+
+    let user = await User.register(newUser, req.body.password);
+    req.login(user, function (err) {
+      if (err) {
+        return next(err);
+      }
+      req.session.success = `Welcome to Surf Shop, ${newUser.username}!`;
+      return res.redirect('/');
+    });
+  },
+
+  // GET /login
+  getLogin(req, res, next) {
+    res.render('login', {
+      title: 'Login'
+    });
   },
 
   // POST /login

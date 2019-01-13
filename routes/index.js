@@ -3,32 +3,31 @@ const router = express.Router();
 
 // Import middleware
 const {
-  asyncErrorHandler
+  asyncErrorHandler,
+  checkIfUserExists
 } = require('../middleware');
 
 // Import controllers
-const { 
+const {
+  landingPage,
+  getRegister,
   postRegister,
+  getLogin,
   postLogin,
-  getLogout,
-  landingPage
+  getLogout
 } = require('../controllers');
 
 /* GET home page. */
 router.get('/', asyncErrorHandler(landingPage));
 
 /* GET /register */
-router.get('/register', (req, res, next) => {
-  res.send('GET /register')
-});
+router.get('/register', getRegister);
 
 /* POST /register */
-router.post('/register', asyncErrorHandler(postRegister));
+router.post('/register', asyncErrorHandler(checkIfUserExists), asyncErrorHandler(postRegister));
 
 /* GET /login */
-router.get('/login', (req, res, next) => {
-  res.send('GET /login')
-});
+router.get('/login', getLogin);
 
 /* POST /login */
 router.post('/login', postLogin);

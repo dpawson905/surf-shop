@@ -11,7 +11,5 @@ const UserSchema = new Schema({
   image: String
 });
 
-UserSchema.plugin(passportLocalMongoose, {
-  lastLoginField: true
-});
+UserSchema.plugin(passportLocalMongoose);
 module.exports = mongoose.model('User', UserSchema);
