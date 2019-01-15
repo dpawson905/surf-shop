@@ -30,7 +30,7 @@ router.post('/register', asyncErrorHandler(checkIfUserExists), asyncErrorHandler
 router.get('/login', getLogin);
 
 /* POST /login */
-router.post('/login', postLogin);
+router.post('/login', asyncErrorHandler(postLogin));
 
 /* GET /logout */
 router.get('/logout', getLogout)
