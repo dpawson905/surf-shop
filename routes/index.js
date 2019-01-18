@@ -3,8 +3,7 @@ const router = express.Router();
 
 // Import middleware
 const {
-  asyncErrorHandler,
-  checkIfUserExists
+  asyncErrorHandler
 } = require('../middleware');
 
 // Import controllers
@@ -24,7 +23,7 @@ router.get('/', asyncErrorHandler(landingPage));
 router.get('/register', getRegister);
 
 /* POST /register */
-router.post('/register', asyncErrorHandler(checkIfUserExists), asyncErrorHandler(postRegister));
+router.post('/register', asyncErrorHandler(postRegister));
 
 /* GET /login */
 router.get('/login', getLogin);
