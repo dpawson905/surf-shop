@@ -7,7 +7,8 @@ const upload = multer({ storage });
 // load middleware
 const { 
   asyncErrorHandler,
-  isLoggedIn
+  isLoggedIn,
+  isAuthor
 } = require('../middleware');
 
 // load controllers
@@ -34,12 +35,12 @@ router.post('/', isLoggedIn, upload.array('images', 4), asyncErrorHandler(postCr
 router.get('/:id', asyncErrorHandler(postShow));
 
 /* GET posts edit /posts/:id/edit */
-router.get('/:id/edit', asyncErrorHandler(postEdit));
+router.get('/:id/edit', isLoggedIn, asyncErrorHandler(isAuthor), asyncErrorHandler(postEdit));
 
 /* PUT posts edit /posts/:id */
-router.put('/:id', upload.array('images', 4), asyncErrorHandler(postUpdate));
+router.put('/:id', isLoggedIn, asyncErrorHandler(isAuthor), upload.array('images', 4), asyncErrorHandler(postUpdate));
 
 /* DELETE posts edit /posts/:id */
-router.delete('/:id', asyncErrorHandler(postDestroy));
+router.delete('/:id', isLoggedIn, asyncErrorHandler(isAuthor), asyncErrorHandler(postDestroy));
 
 module.exports = router;

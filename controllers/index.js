@@ -54,9 +54,8 @@ module.exports = {
 
   // GET /login
   getLogin(req, res, next) {
-    res.render('login', {
-      title: 'Login'
-    });
+    if (req.isAuthenticated()) return res.redirect('/');
+    res.render('login', { title: 'Login' });
   },
 
   // POST /login
