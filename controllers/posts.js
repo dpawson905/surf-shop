@@ -106,14 +106,8 @@ module.exports = {
   },
 
   // Post Edit
-  async postEdit(req, res, next) {
-    // pull post from res.locals
-    const {
-      post
-    } = res.locals;
-    res.render('posts/edit', {
-      post
-    });
+  postEdit(req, res, next) {
+    res.render('posts/edit');
   },
 
   // Post Update
