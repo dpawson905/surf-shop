@@ -3,7 +3,8 @@ const router = express.Router();
 
 // Import middleware
 const {
-  asyncErrorHandler
+  asyncErrorHandler,
+  isLoggedIn
 } = require('../middleware');
 
 // Import controllers
@@ -13,7 +14,8 @@ const {
   postRegister,
   getLogin,
   postLogin,
-  getLogout
+  getLogout,
+  getProfile
 } = require('../controllers');
 
 /* GET home page. */
@@ -35,9 +37,7 @@ router.post('/login', asyncErrorHandler(postLogin));
 router.get('/logout', getLogout)
 
 /* GET /profile */
-router.get('/profile', (req, res, next) => {
-  res.send('GET /profile')
-});
+router.get('/profile', isLoggedIn, asyncErrorHandler(getProfile));
 
 /* PUT /profile/:user_id */
 router.put('/profile/:user_id', (req, res, next) => {
