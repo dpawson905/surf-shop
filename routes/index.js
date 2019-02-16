@@ -15,7 +15,8 @@ const {
   getLogin,
   postLogin,
   getLogout,
-  getProfile
+  getProfile,
+  updateProfile
 } = require('../controllers');
 
 /* GET home page. */
@@ -39,10 +40,8 @@ router.get('/logout', getLogout)
 /* GET /profile */
 router.get('/profile', isLoggedIn, asyncErrorHandler(getProfile));
 
-/* PUT /profile/:user_id */
-router.put('/profile/:user_id', (req, res, next) => {
-  res.send('PUT /profile/:user_id')
-});
+/* PUT /profile */
+router.put('/profile', isLoggedIn, asyncErrorHandler(updateProfile));
 
 /* GET /forgot-password */
 router.get('/forgot-pw', (req, res, next) => {
