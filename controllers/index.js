@@ -93,49 +93,16 @@ module.exports = {
   },
 
   async updateProfile(req, res, next) {
-    // destructure form values from req.body object
     const {
       username,
-      currentPassword,
-      newPassword,
-      passwordConfirmation,
       email
     } = req.body;
-    // find logged in user in database
-    const user = await User.findById(req.user._id);
-    // check if all password values exist
-    if (currentPassword && newPassword && passwordConfirmation) {
-      // check if new passwords match
-      if (newPassword === passwordConfirmation) {
-        // change password if currentPassword is valid
-        try {
-          await user.changePassword(currentPassword, newPassword);
-        } catch (err) {
-          req.session.error = 'Invalid current password';
-          return res.redirect('/profile');
-        }
-      } else {
-        req.session.error = 'New passwords must match!';
-        return res.redirect('/profile');
-      }
-    }
-    // check if username or email need to be updated
-    let updated = false;
-    if (username) {
-      user.username = username;
-      updated = true;
-    }
-    if (email) {
-      user.email = email;
-      updated = true;
-    }
-    // save the user if username or email were updated
-    if (updated) await user.save();
-    // promsify req.login
+    const { user } = res.locals;
+    if (username) user.username = username;
+    if (email) user.email = email;
+    await user.save();
     const login = util.promisify(req.login.bind(req));
-    // log the user back in with new password
     await login(user);
-    // redirect to /profile with a success flash message
     req.session.success = 'Profile successfully updated!';
     res.redirect('/profile');
   }

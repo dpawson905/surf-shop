@@ -4,7 +4,9 @@ const router = express.Router();
 // Import middleware
 const {
   asyncErrorHandler,
-  isLoggedIn
+  isLoggedIn,
+  isValidPassword,
+  changePassword
 } = require('../middleware');
 
 // Import controllers
@@ -41,7 +43,12 @@ router.get('/logout', getLogout)
 router.get('/profile', isLoggedIn, asyncErrorHandler(getProfile));
 
 /* PUT /profile */
-router.put('/profile', isLoggedIn, asyncErrorHandler(updateProfile));
+router.put('/profile', 
+  isLoggedIn, 
+  asyncErrorHandler(isValidPassword),
+  asyncErrorHandler(changePassword),
+  asyncErrorHandler(updateProfile)
+);
 
 /* GET /forgot-password */
 router.get('/forgot-pw', (req, res, next) => {
