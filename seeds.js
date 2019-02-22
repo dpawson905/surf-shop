@@ -16,7 +16,7 @@ async function seedPosts() {
 				type: 'Point',
 				coordinates: [cities[random1000].longitude, cities[random1000].latitude],
 			},
-			author: '5c67e75ffbcde6159697ea89'
+			author: '5c70739bedd7a7166f71a0a9'
 	
 		}
 		let post = new Post(postData);
