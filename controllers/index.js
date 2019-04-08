@@ -7,9 +7,8 @@ const util = require('util');
 const { cloudinary } = require('../cloudinary');
 const { deleteProfileImage } = require('../middleware');
 const crypto = require('crypto');
-const apiKey = process.env.MAILGUN_API_KEY;
-const domain = 'sandbox6d4eb8802e9b440cb1b20acd2ebeec27.mailgun.org';
-const mailgun = require('mailgun-js')({ apiKey, domain });
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 module.exports = {
   // GET /
@@ -130,19 +129,18 @@ module.exports = {
   },
   async putForgotPw(req, res, next) {
     const token = await crypto.randomBytes(20).toString('hex');
-
-    const user = await User.findOne({ email: req.body.email });
+    const { email } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
       req.session.error = 'No account with that email address exists.';
       return res.redirect('/forgot-password');
     }
-
     user.resetPasswordToken = token;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
     await user.save();
 
-    const mailData = {
+    const msg = {
       from: 'Surf Shop Admin <dpawson905@gmail.com>',
       to: user.email,
       subject: 'Surf Shop - Forgot Password / Reset',
@@ -150,15 +148,13 @@ module.exports = {
         Please click on the following link, or copy and paste it into your browser to complete the process:
         http://${req.headers.host}/reset/${token}
         If you did not request this, please ignore this email and your password will remain unchanged.`.replace(
-        /				/g,
+        /        /g,
         ''
       )
     };
 
-    await mailgun.messages().send(mailData);
-    req.session.success = `An e-mail has been sent to ${
-      user.email
-    } with further instructions.`;
+    await sgMail.send(msg);
+    req.session.success = `An e-mail has been sent to ${email} with further instructions.`;
     res.redirect('/forgot-password');
   },
   async getReset(req, res, next) {
@@ -187,8 +183,8 @@ module.exports = {
 
     if (req.body.password === req.body.confirm) {
       await user.setPassword(req.body.password);
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
+      user.resetPasswordToken = null;
+      user.resetPasswordExpires = null;
       await user.save();
       const login = util.promisify(req.login.bind(req));
       await login(user);
@@ -197,9 +193,9 @@ module.exports = {
       return res.redirect(`/reset/${token}`);
     }
 
-    const mailData = {
-      from: 'Surf Shop Admin <dpawson905@gmail.com>',
+    const msg = {
       to: user.email,
+      from: 'Surf Shop Admin <your@email.com>',
       subject: 'Surf Shop - Password Changed',
       text: `Hello,
         This email is to confirm that the password for your account has just been changed.
@@ -209,7 +205,7 @@ module.exports = {
       )
     };
 
-    await mailgun.messages().send(mailData);
+    await sgMail.send(msg);
 
     req.session.success = 'Password successfully updated!';
     res.redirect('/');
