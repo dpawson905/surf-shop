@@ -11,7 +11,9 @@ const Post = require('../models/post');
 module.exports = {
   // GET all posts /index
   async postIndex(req, res, next) {
-    let posts = await Post.paginate({}, {
+    const { dbQuery } = res.locals;
+    delete res.locals.dbQuery;
+    let posts = await Post.paginate(dbQuery, {
       page: req.query.page || 1,
       limit: 10,
       sort: '-_id'
@@ -38,7 +40,9 @@ module.exports = {
         endPage = currentPage + 4;
       }
     }
-
+    if(!posts.docs.length && res.locals.query) {
+      res,locals.error = "No results match that query";
+    }
     res.render('posts/index', {
       posts,
       mapBoxToken,
@@ -83,7 +87,7 @@ module.exports = {
 
   // Post Show
   async postShow(req, res, next) {
-    let post = await Post.findById(req.params.id)
+    const post = await Post.findById(req.params.id)
       .populate({
         path: 'reviews',
         options: {
@@ -97,7 +101,8 @@ module.exports = {
           model: 'User'
         }
       });
-    let floorRating = post.calculateAvgRating();
+    // const floorRating = post.calculateAvgRating();
+    const floorRating = post.avgRating;
     res.render('posts/show', {
       post,
       mapBoxToken,
